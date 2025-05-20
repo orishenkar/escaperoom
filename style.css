@@ -1,0 +1,30 @@
+body {
+  direction: rtl;
+  font-family: 'David', serif;
+  background-color: #f5f5dc;
+  color: #333;
+  padding: 20px;
+  text-align: center;
+}
+.container {
+  max-width: 700px;
+  margin: auto;
+  background: #fff8e1;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.2);
+}
+input, button {
+  margin: 5px;
+  padding: 10px;
+  font-size: 1em;
+}
+button {
+  background-color: #d2b48c;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #bfa36e;
+}

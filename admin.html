@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ניהול שאלות</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>ניהול שאלות</h1>
+    <input type="password" id="password" placeholder="הזן סיסמה" />
+    <button onclick="login()">כניסה</button>
+    <div id="editor" style="display:none;">
+      <div id="questions-list"></div>
+      <button onclick="addQuestion()">➕ הוסף שאלה</button>
+      <button onclick="saveQuestions()">💾 שמור</button>
+    </div>
+  </div>
+  <script>
+    const correctPassword = "1234";
+    const questionsKey = "questions";
+
+    function login() {
+      const pass = document.getElementById("password").value;
+      if (pass === correctPassword) {
+        document.getElementById("editor").style.display = "block";
+        document.getElementById("password").style.display = "none";
+        loadQuestions();
+      } else {
+        alert("סיסמה שגויה");
+      }
+    }
+
+    function loadQuestions() {
+      const questions = JSON.parse(localStorage.getItem(questionsKey)) || [];
+      const container = document.getElementById("questions-list");
+      container.innerHTML = "";
+      questions.forEach((q, index) => {
+        container.innerHTML += `
+          <div style="border:1px solid #ccc;padding:10px;margin:10px;">
+            <input type="text" value="${q.question}" id="q${index}" placeholder="שאלה" />
+            <input type="text" value="${q.answer}" id="a${index}" placeholder="תשובה נכונה" />
+          </div>`;
+      });
+    }
+
+    function addQuestion() {
+      const container = document.getElementById("questions-list");
+      const index = container.children.length;
+      container.innerHTML += `
+        <div style="border:1px solid #ccc;padding:10px;margin:10px;">
+          <input type="text" id="q${index}" placeholder="שאלה חדשה" />
+          <input type="text" id="a${index}" placeholder="תשובה נכונה" />
+        </div>`;
+    }
+
+    function saveQuestions() {
+      const container = document.getElementById("questions-list");
+      const questions = [];
+      for (let i = 0; i < container.children.length; i++) {
+        const question = document.getElementById(`q${i}`).value;
+        const answer = document.getElementById(`a${i}`).value;
+        if (question && answer) {
+          questions.push({ question, answer });
+        }
+      }
+      localStorage.setItem(questionsKey, JSON.stringify(questions));
+      alert("השאלות נשמרו!");
+    }
+  </script>
+</body>
+</html>
